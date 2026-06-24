@@ -1,0 +1,40 @@
+{
+  "tools": [
+    {
+      "name": "AIDA64",
+      "path": "Tools/AIDA64/aida64.exe",
+      "icon": "Tools/AIDA64/icon.png",
+      "category": "Diagnostics"
+    },
+    {
+      "name": "CrystalDiskInfo",
+      "path": "Tools/CrystalDiskInfo/DiskInfo64.exe",
+      "icon": "Tools/CrystalDiskInfo/icon.png",
+      "category": "Diagnostics"
+    },
+    {
+      "name": "Victoria",
+      "path": "Tools/Victoria/Victoria.exe",
+      "icon": "Tools/Victoria/icon.png",
+      "category": "Diagnostics"
+    },
+    {
+      "name": "Everything",
+      "path": "Tools/Everything/Everything.exe",
+      "icon": "Tools/Everything/icon.png",
+      "category": "Tools"
+    },
+    {
+      "name": "CPU-Z",
+      "path": "Tools/CPU-Z/cpuz.exe",
+      "icon": "Tools/CPU-Z/icon.png",
+      "category": "Diagnostics"
+    },
+    {
+      "name": "GPU-Z",
+      "path": "Tools/GPU-Z/GPU-Z.exe",
+      "icon": "Tools/GPU-Z/icon.png",
+      "category": "Diagnostics"
+    }
+  ]
+}
