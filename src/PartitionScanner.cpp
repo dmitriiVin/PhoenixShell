@@ -133,7 +133,8 @@ std::optional<QString> PartitionScanner::findWinPEDrive()
     }
 
     // Если стандартные не найдены, ищем любой доступный диск
-    for (const DriveInfo& drive : getAllDrives()) {
+    PartitionScanner scanner;
+    for (const DriveInfo& drive : scanner.getAllDrives()) {
         if (drive.isValid && drive.letter != QStringLiteral("C")) {
             return drive.letter;
         }
