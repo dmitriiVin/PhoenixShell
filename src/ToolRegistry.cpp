@@ -1,4 +1,5 @@
 #include "ToolRegistry.h"
+#include "DataLoader.h"
 
 #include "PathUtils.h"
 
@@ -20,6 +21,8 @@ ToolRegistry::ToolRegistry(QObject* parent)
 {
     qRegisterMetaType<ToolEntry>("ToolEntry");
 }
+
+ToolRegistry::~ToolRegistry() = default;
 
 void ToolRegistry::reload()
 {
@@ -148,4 +151,81 @@ void ToolRegistry::addUnique(QVector<ToolEntry>& list, const ToolEntry& entry) c
     }
 
     list.push_back(entry);
+}
+
+bool ToolRegistry::loadFromDataPartition(const QString& dataPartitionLetter)
+{
+    if (dataPartitionLetter.isEmpty()) {
+        qWarning().noquote() << QStringLiteral("Invalid data partition letter");
+        return false;
+    }
+
+    m_dataPartitionLetter = dataPartitionLetter.toUpper();
+    m_dataLoader = std::make_unique<DataLoader>(m_dataPartitionLetter);
+
+    if (!m_dataLoader) {
+        qWarning().noquote() << QStringLiteral("Failed to create DataLoader");
+        return false;
+    }
+
+    m_dataLoader->initialize();
+
+    if (!m_dataLoader->isInitialized()) {
+        qWarning().noquote() << QStringLiteral("DataLoader failed to initialize");
+        m_dataLoader.reset();
+        return false;
+    }
+
+    // Загрузить инструменты из соседнего раздела
+    QVector<ToolEntry> dataTools = loadFromDataLoader(m_dataLoader.get());
+    for (const ToolEntry& entry : dataTools) {
+        addUnique(m_tools, entry);
+    }
+
+    qInfo().noquote() << QStringLiteral("Loaded %1 tools from data partition %2:\\")
+        .arg(dataTools.size(), m_dataPartitionLetter);
+
+    emit dataPartitionLoaded(m_dataPartitionLetter);
+    return true;
+}
+
+QVector<ToolEntry> ToolRegistry::loadFromDataLoader(DataLoader* loader) const
+{
+    QVector<ToolEntry> result;
+
+    if (!loader || !loader->isInitialized()) {
+        return result;
+    }
+
+    // Получить все инструменты из DataLoader
+    QVector<ToolData> allTools = loader->getTools();
+
+    for (const ToolData& tool : allTools) {
+        if (!tool.isValid) {
+            continue;
+        }
+
+        ToolEntry entry;
+        entry.name = tool.name;
+        entry.path = tool.executable;
+        entry.iconPath = tool.iconPath;
+        entry.category = tool.category;
+        entry.workingDirectory = tool.workingDir;
+
+        if (!entry.isValid()) {
+            qWarning().noquote() << QStringLiteral("Invalid tool entry: %1").arg(tool.name);
+            continue;
+        }
+
+        // Проверить, что файл существует
+        if (!QFile::exists(entry.path)) {
+            qWarning().noquote() << QStringLiteral("Tool executable not found: %1").arg(entry.path);
+            continue;
+        }
+
+        result.push_back(entry);
+    }
+
+    qInfo().noquote() << QStringLiteral("Loaded %1 tools from DataLoader").arg(result.size());
+    return result;
 }

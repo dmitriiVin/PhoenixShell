@@ -18,8 +18,12 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Network)
 qt_standard_project_setup()
 
 qt_add_executable(PhoenixShell WIN32
+    src/ApplicationBootstrapper.cpp
+    src/ApplicationBootstrapper.h
     src/ApplicationLauncher.cpp
     src/ApplicationLauncher.h
+    src/DataLoader.cpp
+    src/DataLoader.h
     src/DesktopManager.cpp
     src/DesktopManager.h
     src/DiagnosticsModule.cpp
@@ -32,6 +36,8 @@ qt_add_executable(PhoenixShell WIN32
     src/InstallerModule.h
     src/Logging.cpp
     src/Logging.h
+    src/PartitionScanner.cpp
+    src/PartitionScanner.h
     src/PathUtils.cpp
     src/PathUtils.h
     src/ProgramManager.cpp
