@@ -64,6 +64,6 @@ public:
     static std::optional<QString> findAdjacentPartition(const QString& currentDrive);
 
 private:
-    QVector<DriveInfo> scanDrives();
+    QVector<DriveInfo> scanDrives() const;
     static bool isValidWindowsDrive(const QString& driveLetter);
 };

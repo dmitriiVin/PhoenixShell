@@ -37,7 +37,7 @@ void ToolRegistry::reload()
     }
 
     m_tools = merged;
-    qInfo().noquote() << QStringLiteral("ToolRegistry loaded %1 tools").arg(m_tools.size());
+    qInfo().noquote() << QStringLiteral("ToolRegistry loaded %1 tools").arg(QString::number(m_tools.size()));
     emit reloaded();
 }
 
@@ -183,7 +183,7 @@ bool ToolRegistry::loadFromDataPartition(const QString& dataPartitionLetter)
     }
 
     qInfo().noquote() << QStringLiteral("Loaded %1 tools from data partition %2:\\")
-        .arg(dataTools.size(), m_dataPartitionLetter);
+        .arg(QString::number(dataTools.size()), m_dataPartitionLetter);
 
     emit dataPartitionLoaded(m_dataPartitionLetter);
     return true;
@@ -226,6 +226,6 @@ QVector<ToolEntry> ToolRegistry::loadFromDataLoader(DataLoader* loader) const
         result.push_back(entry);
     }
 
-    qInfo().noquote() << QStringLiteral("Loaded %1 tools from DataLoader").arg(result.size());
+    qInfo().noquote() << QStringLiteral("Loaded %1 tools from DataLoader").arg(QString::number(result.size()));
     return result;
 }

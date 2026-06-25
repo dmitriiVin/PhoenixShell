@@ -29,7 +29,9 @@ void DataLoader::initialize()
     m_isInitialized = true;
 
     qInfo().noquote() << QStringLiteral("DataLoader initialized: %1 tools, %2 drivers, %3 images")
-        .arg(m_tools.size(), m_drivers.size(), m_windowsImages.size());
+        .arg(QString::number(m_tools.size()),
+             QString::number(m_drivers.size()),
+             QString::number(m_windowsImages.size()));
 }
 
 QVector<ToolData> DataLoader::getTools() const
@@ -104,7 +106,7 @@ void DataLoader::scanTools()
     }
 
     QStringList toolDirs = toolsDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-    qInfo().noquote() << QStringLiteral("Found %1 tool directories").arg(toolDirs.size());
+    qInfo().noquote() << QStringLiteral("Found %1 tool directories").arg(QString::number(toolDirs.size()));
 
     for (const QString& toolDir : toolDirs) {
         QString fullPath = toolsPath + QStringLiteral("/") + toolDir;
@@ -141,7 +143,7 @@ void DataLoader::scanDrivers()
 
         QStringList driverFiles = categoryDir.entryList({ QStringLiteral("*.inf"), QStringLiteral("*.exe") });
         qInfo().noquote() << QStringLiteral("Found %1 drivers in category: %2")
-            .arg(driverFiles.size(), category);
+            .arg(QString::number(driverFiles.size()), category);
 
         for (const QString& driverFile : driverFiles) {
             QString fullPath = categoryPath + QStringLiteral("/") + driverFile;
@@ -168,7 +170,7 @@ void DataLoader::scanWindowsImages()
 
     QStringList imageFiles = imagesDir.entryList({ QStringLiteral("*.wim"), QStringLiteral("*.esd"), 
                                                     QStringLiteral("*.iso") });
-    qInfo().noquote() << QStringLiteral("Found %1 Windows images").arg(imageFiles.size());
+    qInfo().noquote() << QStringLiteral("Found %1 Windows images").arg(QString::number(imageFiles.size()));
 
     for (const QString& imageFile : imageFiles) {
         QString fullPath = imagesPath + QStringLiteral("/") + imageFile;

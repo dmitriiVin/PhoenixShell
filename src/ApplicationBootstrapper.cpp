@@ -66,7 +66,9 @@ bool ApplicationBootstrapper::initialize(ToolRegistry* toolRegistry)
             auto images = m_dataLoader->getWindowsImages();
 
             emit initializationProgress(QStringLiteral("Loaded: %1 tools, %2 drivers, %3 Windows images")
-                .arg(tools.size(), drivers.size(), images.size()));
+                .arg(QString::number(tools.size()),
+                     QString::number(drivers.size()),
+                     QString::number(images.size())));
 
             if (auto wallpapers = m_dataLoader->getWallpapersDirectory()) {
                 qInfo().noquote() << QStringLiteral("Wallpapers: %1").arg(*wallpapers);
@@ -89,7 +91,7 @@ bool ApplicationBootstrapper::initialize(ToolRegistry* toolRegistry)
     toolRegistry->reload();
 
     auto allTools = toolRegistry->tools();
-    emit initializationProgress(QStringLiteral("Total tools loaded: %1").arg(allTools.size()));
+    emit initializationProgress(QStringLiteral("Total tools loaded: %1").arg(QString::number(allTools.size())));
 
     logProgress(QStringLiteral("Initialization complete!"));
     emit initializationComplete();

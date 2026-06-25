@@ -5,13 +5,14 @@
 #include <QProcess>
 #include <QVector>
 #include <QWidget>
+#include <QLineEdit>
 #include <memory>
 
 class QCheckBox;
 class QComboBox;
 class QListWidget;
 class QListWidgetItem;
-class QLineEdit;
+class QWidget;
 class QLabel;
 class QPlainTextEdit;
 class QPushButton;

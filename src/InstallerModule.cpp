@@ -209,9 +209,9 @@ void InstallerModule::refreshDataSource()
 
     QString status = QStringLiteral("Source: %1, images %2, drivers %3, programs %4")
                          .arg(m_dataPartitionLetter.isEmpty() ? m_dataRootPath : m_dataPartitionLetter + QStringLiteral(":"))
-                         .arg(m_windowsImages.size())
-                         .arg(m_drivers.size())
-                         .arg(m_tools.size());
+                         .arg(QString::number(m_windowsImages.size()))
+                         .arg(QString::number(m_drivers.size()))
+                         .arg(QString::number(m_tools.size()));
     setDataSourceLabel(status);
     enableSelectionWidgets(true);
     updateStartState();

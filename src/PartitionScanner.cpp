@@ -201,7 +201,7 @@ std::optional<QString> PartitionScanner::findAdjacentPartition(const QString& cu
     return std::nullopt;
 }
 
-QVector<DriveInfo> PartitionScanner::scanDrives()
+QVector<DriveInfo> PartitionScanner::scanDrives() const
 {
     QVector<DriveInfo> drives;
 
